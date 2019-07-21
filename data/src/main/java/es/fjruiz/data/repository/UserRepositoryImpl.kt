@@ -1,9 +1,12 @@
 package es.fjruiz.data.repository
 
+import es.fjruiz.data.entity.mapper.UserMapper
+import es.fjruiz.data.repository.datasource.UserDataStoreFactory
 import es.fjruiz.domain.bo.User
 import es.fjruiz.domain.repository.UserRepository
+import javax.inject.Inject
 
-class UserRepositoryImpl: UserRepository {
+class UserRepositoryImpl @Inject constructor(private val dataFactory: UserDataStoreFactory): UserRepository {
 
     //region Static
 
@@ -30,8 +33,10 @@ class UserRepositoryImpl: UserRepository {
     //endregion
 
     //region Methods for/from SuperClass/Interfaces
-    override suspend fun getUsers(): List<User> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun getUsers(organizationName: String): List<User> {
+        return dataFactory.createCloud().getUsers(organizationName).map {
+            UserMapper.transform(it)
+        }
     }
     //endregion
 
