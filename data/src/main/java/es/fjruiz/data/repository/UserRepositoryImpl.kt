@@ -1,9 +1,9 @@
 package es.fjruiz.data.repository
 
 import es.fjruiz.domain.bo.User
-import es.fjruiz.domain.repository.BaseRepository
+import es.fjruiz.domain.repository.UserRepository
 
-class BaseRepositoryImpl: BaseRepository {
+class UserRepositoryImpl: UserRepository {
 
     //region Static
 
