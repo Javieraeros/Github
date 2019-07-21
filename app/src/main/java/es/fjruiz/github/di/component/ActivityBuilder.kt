@@ -2,7 +2,7 @@ package es.fjruiz.github.di.component
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import es.fjruiz.github.base.BaseActivity
+import es.fjruiz.github.view.activity.MainActivity
 
 @Module
 abstract class ActivityBuilder {
@@ -12,5 +12,5 @@ abstract class ActivityBuilder {
      */
 
     @ContributesAndroidInjector
-    abstract fun bindBaseActivity(): BaseActivity
+    abstract fun bindMainActivity(): MainActivity
 }
