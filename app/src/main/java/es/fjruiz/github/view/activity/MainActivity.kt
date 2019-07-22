@@ -5,9 +5,13 @@ import es.fjruiz.domain.bo.User
 import es.fjruiz.github.R
 import es.fjruiz.github.base.BaseActivity
 import es.fjruiz.github.view.fragment.OrganizationFragment
+import es.fjruiz.github.view.fragment.UserDetailFragment
 
 
-
+/**
+ * To simplify the project, only use one activity
+ *
+ */
 class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +27,11 @@ class MainActivity : BaseActivity() {
 
     fun goToUserDetail(user: User) {
         // TODO: 22/07/19
-        /*val fragmentManager = supportFragmentManager
+        val userFragment = UserDetailFragment.newInstance(user)
+        val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()
-            .add(R.id.fragment_container, organizationFragment)
-            .commit()*/
+            .add(R.id.fragment_container, userFragment)
+            .addToBackStack(UserDetailFragment.TAG)
+            .commit()
     }
 }

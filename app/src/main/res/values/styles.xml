@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/primaryLightColor</item>
     </style>
 
+    <style name="AppTheme.BlueAccent" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/primaryDarkColor</item> <!-- Whatever color you want-->
+    </style>
+
 </resources>

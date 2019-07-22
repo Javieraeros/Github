@@ -52,12 +52,14 @@ class OrganizationAdapter(private val organizationListener: OrganizationListener
         )
     ) {
         fun paintUsers(user: User, listener: OrganizationListener) {
-            itemView.setOnClickListener {
-                listener.onUserClick(user)
+            itemView.apply {
+                Glide.with(this).load(user.image).into(imageViewAvatar)
+                textViewNickname.text = user.nickName
+                textViewName.text = user.name
+                setOnClickListener {
+                    listener.onUserClick(user)
+                }
             }
-            Glide.with(itemView).load(user.image).into(itemView.imageViewAvatar)
-            itemView.textViewNickname.text = user.nickName
-            itemView.textViewName.text = user.name
 
         }
     }

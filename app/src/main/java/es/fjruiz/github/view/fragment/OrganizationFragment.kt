@@ -13,6 +13,7 @@ import es.fjruiz.domain.bo.User
 import es.fjruiz.github.R
 import es.fjruiz.github.base.BaseFragment
 import es.fjruiz.github.di.GoogleViewModelFactory
+import es.fjruiz.github.view.activity.MainActivity
 import es.fjruiz.github.view.adapter.OrganizationAdapter
 import es.fjruiz.github.viewmodel.UserViewModel
 import es.fjruiz.github.vo.Status
@@ -61,8 +62,8 @@ class OrganizationFragment : BaseFragment() {
         // Inflate the layout for this fragment
         organizationAdapter = OrganizationAdapter(object : OrganizationAdapter.OrganizationListener {
             override fun onUserClick(user: User) {
-                // TODO: 22/07/19
-                toast("En desarrollo")
+                // TODO: 22/07/19 Add navigator!
+                (activity as? MainActivity)?.goToUserDetail(user)
             }
         })
         return getFragmentView(inflater, container)

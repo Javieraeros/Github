@@ -7,6 +7,7 @@
     <color name="primaryTextColor">#111</color>
     <color name="secondaryTextColor">#222</color>
 
+    <color name="white">#fff</color>
     <color name="lightGray">#ddd</color>
     <color name="gray">#222</color>
     <color name="darkGray">#111</color>
