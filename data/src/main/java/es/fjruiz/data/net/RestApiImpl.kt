@@ -3,12 +3,15 @@ package es.fjruiz.data.net
 import com.google.gson.GsonBuilder
 import es.fjruiz.data.BuildConfig
 import es.fjruiz.data.entity.UserEntity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import okhttp3.Dispatcher
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.coroutineContext
 
 class RestApiImpl : RestApi {
     //region Static
@@ -59,9 +62,10 @@ class RestApiImpl : RestApi {
 
     //region Methods for/from SuperClass/Interfaces
     override suspend fun getUsers(organizationName: String): List<UserEntity> {
-        return retrofitAPI.getUsers(organizationName).map {
-            retrofitAPI.getUserDetail(it.nickname)
+        val works =  retrofitAPI.getUsers(organizationName).map {
+            GlobalScope.async(coroutineContext) { retrofitAPI.getUserDetail(it.nickname) }
         }
+        return works.map { it.await() }
     }
     //endregion
 
