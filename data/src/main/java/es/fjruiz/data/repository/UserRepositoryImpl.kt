@@ -3,6 +3,7 @@ package es.fjruiz.data.repository
 import es.fjruiz.data.entity.mapper.UserMapper
 import es.fjruiz.data.repository.datasource.UserDataStoreFactory
 import es.fjruiz.domain.bo.User
+import es.fjruiz.domain.bo.UserDetail
 import es.fjruiz.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -38,6 +39,14 @@ class UserRepositoryImpl @Inject constructor(private val dataFactory: UserDataSt
             UserMapper.transform(it)
         }
     }
+
+    override suspend fun getUserRepos(user: User): UserDetail {
+        val repos = dataFactory.createCloud().getUserRepos(user.nickName).map {
+            UserMapper.transform(it)
+        }
+        return UserDetail(user.id, user.nickName, user.name, user.image, repos)
+    }
+
     //endregion
 
     //region Methods

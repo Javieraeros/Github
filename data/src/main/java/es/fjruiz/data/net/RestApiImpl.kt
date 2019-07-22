@@ -3,6 +3,7 @@ package es.fjruiz.data.net
 import android.util.Log
 import com.google.gson.GsonBuilder
 import es.fjruiz.data.BuildConfig
+import es.fjruiz.data.entity.RepositoryEntity
 import es.fjruiz.data.entity.UserEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -81,6 +82,19 @@ class RestApiImpl : RestApi {
 
         return result
     }
+
+    override suspend fun getUserRepos(userName: String): List<RepositoryEntity> {
+        var result: List<RepositoryEntity> = ArrayList()
+        try {
+            result = retrofitAPI.getUserRepos(userName)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error retrieving data from retrofit: ", e)
+        }
+
+        return result
+
+    }
+
     //endregion
 
     //region Methods

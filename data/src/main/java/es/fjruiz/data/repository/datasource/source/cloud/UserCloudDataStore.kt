@@ -1,5 +1,6 @@
 package es.fjruiz.data.repository.datasource.source.cloud
 
+import es.fjruiz.data.entity.RepositoryEntity
 import es.fjruiz.data.entity.UserEntity
 import es.fjruiz.data.net.RestApi
 import es.fjruiz.data.repository.datasource.source.UserDataStore
@@ -30,6 +31,11 @@ class UserCloudDataStore constructor(private val restApi: RestApi): UserDataStor
     override suspend fun getUsers(organizationName: String): List<UserEntity> {
         return restApi.getUsers(organizationName)
     }
+
+    override suspend fun getUserRepos(userName: String): List<RepositoryEntity> {
+        return restApi.getUserRepos(userName)
+    }
+
     //endregion
 
     //region Methods

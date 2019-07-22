@@ -22,3 +22,4 @@ Proximos cambios:
 - Añadir Android navigation
 - Añadir Room/Realm
 - Añadir bloqueador de app con respecto a actualizaciones.
+- Añadir paginación
