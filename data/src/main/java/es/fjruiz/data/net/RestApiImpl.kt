@@ -1,5 +1,6 @@
 package es.fjruiz.data.net
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import es.fjruiz.data.BuildConfig
 import es.fjruiz.data.entity.UserEntity
@@ -69,9 +70,16 @@ class RestApiImpl : RestApi {
     override suspend fun getUsers(organizationName: String): List<UserEntity> {
         // Mapping in two times to first get the list of deferred users, and then launch all coroutines
         // reducing the time of this function x6
-        return retrofitAPI.getUsers(organizationName).map {
-            CoroutineScope(coroutineContext).async { retrofitAPI.getUserDetail(it.nickname) }
-        }.map { it.await() }
+        var result: List<UserEntity> = ArrayList()
+        try {
+            result = retrofitAPI.getUsers(organizationName).map {
+                CoroutineScope(coroutineContext).async { retrofitAPI.getUserDetail(it.nickname) }
+            }.map { it.await() }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error retrieving data from retrofit: ", e)
+        }
+
+        return result
     }
     //endregion
 

@@ -1,7 +1,6 @@
 package es.fjruiz.github.view.fragment
 
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import es.fjruiz.domain.bo.User
 import es.fjruiz.github.R
 import es.fjruiz.github.base.BaseFragment
 import es.fjruiz.github.di.GoogleViewModelFactory
+import es.fjruiz.github.view.adapter.OrganizationAdapter
 import es.fjruiz.github.viewmodel.UserViewModel
 import es.fjruiz.github.vo.Status
+import kotlinx.android.synthetic.main.fragment_organization.*
 import javax.inject.Inject
 
 /**
@@ -47,6 +50,7 @@ class OrganizationFragment : BaseFragment() {
 
     //region Fields
 
+    private lateinit var organizationAdapter: OrganizationAdapter
     //endregion
 
     //region Constructors & Initialization
@@ -55,6 +59,12 @@ class OrganizationFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        organizationAdapter = OrganizationAdapter(object : OrganizationAdapter.OrganizationListener {
+            override fun onUserClick(user: User) {
+                // TODO: 22/07/19
+                toast("En desarrollo")
+            }
+        })
         return getFragmentView(inflater, container)
     }
     //endregion
@@ -64,20 +74,41 @@ class OrganizationFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_organization, container, false)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = organizationAdapter
+        }
         viewModel.loadUsers().observe(this, Observer {
             when (it.status) {
-                Status.SUCCESS -> Log.i(TAG, "Number of users: ${it.data?.size}")
-                Status.ERROR -> Log.i(TAG, "Error: ")
-                Status.LOADING -> Log.i(TAG, "Loading: ")
+                Status.SUCCESS -> {
+                    Log.i(TAG, "Number of users: ${it.data?.size}")
+                    progressbar.hide()
+                    recyclerView.visibility = View.VISIBLE
+                    it.data?.let { users ->
+                        showUsers(users)
+                    }
+                }
+                Status.ERROR -> {
+                    Log.i(TAG, "Error: ")
+                    recyclerView.visibility = View.GONE
+                    progressbar.hide()
+                }
+                Status.LOADING -> {
+                    recyclerView.visibility = View.GONE
+                    progressbar.show()
+                    Log.i(TAG, "Loading: ")
+                }
             }
         })
     }
     //endregion
 
     //region Methods
-
+    fun showUsers(users: List<User>) {
+        organizationAdapter.setUsers(users)
+    }
     //endregion
 
     //region Private methods
