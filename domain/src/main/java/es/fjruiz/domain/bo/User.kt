@@ -1,4 +1,6 @@
 package es.fjruiz.domain.bo
 
-class User {
-}
+data class User(val id: Long,
+                val nickName: String,
+                val name: String,
+                val image: String)

@@ -35,9 +35,10 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
     //endregion
 
     //region Methods
-    fun loadUsers() {
+    fun loadUsers(): MutableLiveData<Resource<List<User>>> {
         viewModelScope.launch {
-            val users = userRepository.getUsers()
+            // TODO: 22/07/19 Put this name on build.gradle, or add functionality to let the user select the organization
+            val users = userRepository.getUsers("octokit")
             userLiveData.postValue(Resource(Status.LOADING, null, ""))
             if (users.isNotEmpty()) {
                 userLiveData.postValue(Resource(Status.SUCCESS, users, ""))
@@ -45,6 +46,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
                 userLiveData.postValue(Resource(Status.ERROR, null, "No se han encontrado usuarios"))
             }
         }
+        return userLiveData
     }
     //endregion
 
