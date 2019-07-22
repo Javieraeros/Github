@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", "\"https://api.github.com/\""
+            buildConfigField "String", "GITHUB_TOKEN", "\"608ffe2af2930413b1278128842d5d004dd5c4b1\""
+        }
+        debug {
+            buildConfigField "String", "BASE_URL", "\"https://api.github.com/\""
+            buildConfigField "String", "GITHUB_TOKEN", "\"608ffe2af2930413b1278128842d5d004dd5c4b1\""
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(path: ':domain')
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
+
+    //Retrofit and HTTP
+    implementation "com.squareup.retrofit2:retrofit:2.6.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.6.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.0"
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // Room
+    api "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
+
+    // Test
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
