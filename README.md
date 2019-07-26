@@ -23,3 +23,4 @@ Proximos cambios:
 - Añadir Room/Realm
 - Añadir bloqueador de app con respecto a actualizaciones.
 - Añadir paginación
+- Usar extensiones para el mapeo y para el uso de librerías externas

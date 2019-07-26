@@ -121,6 +121,7 @@ class UserDetailFragment : BaseFragment() {
     //region Private methods
     private fun showUser(user: UserDetail) {
         context?.let {
+            // TODO: 26/07/19 Dont use Glide directly, create an extension of image and make there the usage of library
             Glide.with(it).load(user.image).into(imageViewUserAvatar)
         }
         textViewUserName.text = user.name

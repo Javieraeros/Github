@@ -9,6 +9,7 @@ import es.fjruiz.data.repository.datasource.UserDataStoreFactory
 import es.fjruiz.domain.repository.UserRepository
 import javax.inject.Singleton
 
+// TODO: 26/07/19 Don't make dependency injection in app module, try to move to another module
 @Module
 class DataModule {
 

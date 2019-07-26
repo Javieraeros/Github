@@ -15,18 +15,13 @@ class UserDataStoreFactory @Inject constructor(private val restApi: RestApi) {
 
     //region Fields
     // TODO 22/07/19 Add cache
-    private lateinit var userCloudDataStore: UserDataStore
+    private val userCloudDataStore: UserDataStore by lazy { UserCloudDataStore(restApi) }
     //endregion
 
     //region Methods
 
 
-    fun createCloud() = if(::userCloudDataStore.isInitialized) {
-        userCloudDataStore
-    } else {
-        userCloudDataStore = UserCloudDataStore(restApi)
-        userCloudDataStore
-    }
+    fun createCloud() = userCloudDataStore
     //endregion
 
     //region Inner classes

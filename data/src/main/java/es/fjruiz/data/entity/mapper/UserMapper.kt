@@ -7,6 +7,7 @@ import es.fjruiz.domain.bo.Repository
 import es.fjruiz.domain.bo.User
 import es.fjruiz.domain.bo.UserDetail
 
+// TODO: 26/07/19 Delete this and make mappings in objects extensions
 object UserMapper {
 
     fun transform(userEntity: UserEntity): User =
