@@ -23,3 +23,6 @@ Proximos cambios:
 - Añadir Room/Realm
 - Añadir bloqueador de app con respecto a actualizaciones.
 - Añadir paginación
+- Añadir Dependecy graph
+- Añadir Git hooks
+- Añadir KtLint
